@@ -26,6 +26,19 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Customer Reviews</h3>
+      </div>
+
+        <% @product.reviews.each do |review| %>
+        <div class="col-sm-12">
+          <p><%= review.rating %>/5 - <%= review.description %></p>
+        </div>
+        <% end %>
+
+    </div>
+
   </article>
 
 </section>
