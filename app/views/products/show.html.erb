@@ -33,7 +33,18 @@
 
         <% @product.reviews.each do |review| %>
         <div class="col-sm-12">
-          <p><%= review.rating %>/5 - <%= review.description %></p>
+          <% review.rating.to_i.times do  %>
+            <span class="rating-star-full"><%= fa_icon "star" %></span>
+          <% end %>
+          <% empty_stars = 5 - review.rating.to_i %>
+          <% empty_stars.times do  %>
+          <span class="rating-star-empty"><%= fa_icon "star" %></span>
+          <% end %>
+
+        </span>
+
+          <p><%= review.description %></p>
+
         </div>
         <% end %>
 

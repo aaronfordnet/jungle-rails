@@ -83,4 +83,15 @@ main section.products-show {
       max-width: 100%;
     }
   }
+
+  .rating-star-full {
+    color: #ffbe41;
+    text-shadow: -1px 0 #cc9643, 0 1px #cc9643, 1px 0 #cc9643, 0 -1px #cc9643;
+  }
+
+  .rating-star-empty {
+    color: #b4b4b4;
+    text-shadow: -1px 0 #9d9d9d, 0 1px #9d9d9d, 1px 0 #9d9d9d, 0 -1px #9d9d9d;
+  }
+
 }
