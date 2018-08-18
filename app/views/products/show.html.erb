@@ -42,6 +42,10 @@
         <% end %>
 
         <p><%= review.description %></p>
+        <% user = User.find_by(id: review.user_id)%>
+        <% if user == current_user%>
+          <%= link_to fa_icon('trash'), product_reviews_path(product_id: @product.id, id: review.id), method: :delete %>
+        <% end %>
 
       </div>
       <% end %>
