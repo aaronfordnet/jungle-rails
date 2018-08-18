@@ -31,23 +31,67 @@
         <h3>Customer Reviews</h3>
       </div>
 
-        <% @product.reviews.each do |review| %>
-        <div class="col-sm-12">
-          <% review.rating.to_i.times do  %>
-            <span class="rating-star-full"><%= fa_icon "star" %></span>
-          <% end %>
-          <% empty_stars = 5 - review.rating.to_i %>
-          <% empty_stars.times do  %>
+      <% @product.reviews.reverse_each do |review| %>
+      <div class="col-sm-12">
+        <% review.rating.to_i.times do  %>
+          <span class="rating-star-full"><%= fa_icon "star" %></span>
+        <% end %>
+        <% empty_stars = 5 - review.rating.to_i %>
+        <% empty_stars.times do  %>
           <span class="rating-star-empty"><%= fa_icon "star" %></span>
-          <% end %>
-
-        </span>
-
-          <p><%= review.description %></p>
-
-        </div>
         <% end %>
 
+        <p><%= review.description %></p>
+
+      </div>
+      <% end %>
+
+
+      <% if current_user.present? %>
+      <div class="col-sm-12">
+        <h3>Write a review</h3>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <%= form_for @product, :url => product_reviews_path(@product), method: 'post' do |f| %>
+
+            <% if f.object.errors.any? %>
+              <div class="alert alert-danger">
+                <strong>The following errors prevented saving:</strong>
+                <ul>
+                  <% f.object.errors.full_messages.each do |error| %>
+                    <li><%= error %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+              <%= f.fields_for :reviews do |form| %>
+
+                <div class="form-group">
+                  <%= form.label :rating %>
+                  <%= form.select :rating, (1..5), class: 'form-control' %>
+                </div>
+
+                <div class="form-group">
+                  <%= form.label :description %>
+                  <%= form.text_area :description, class: 'form-control' %>
+                </div>
+
+                <%= form.submit 'Submit Review', class: 'btn btn-primary' %>
+              <% end %>
+            <% end %>
+
+            <br/>
+            <br/>
+          </div>
+        </div>
+        <% else %>
+          <%= link_to 'Login to leave a review', '/login' %>
+        <% end %>
+       <br/>
+       <br/>
+      </div>
     </div>
 
   </article>
