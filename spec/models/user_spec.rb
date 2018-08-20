@@ -40,6 +40,22 @@ RSpec.describe User, type: :model do
       other_user_in_db = User.create(first_name: 'First', last_name: 'Last', email: 'first@last.com', password: 'abc123', password_confirmation: 'abc123')
       expect(subject.valid?).to be false
     end
+  end
+
+  describe '.authenticate_with_credentials' do
+
+    it 'should be valid when email contains whitespaces' do
+      user = User.new(first_name: 'First', last_name: 'Last', email: 'test@test.com', password: 'abc123', password_confirmation: 'abc123')
+      user.email = '  test@test.com '
+      expect(user.valid?).to be true
+    end
+
+    it 'should be valid when email contains incorrect case' do
+      user = User.new(first_name: 'First', last_name: 'Last', email: 'test@test.com', password: 'abc123', password_confirmation: 'abc123')
+      user.email = 'TEST@test.COM'
+      expect(user.valid?).to be true
+    end
 
   end
+
 end
