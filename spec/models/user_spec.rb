@@ -44,16 +44,22 @@ RSpec.describe User, type: :model do
 
   describe '.authenticate_with_credentials' do
 
-    it 'should be valid when email contains whitespaces' do
-      user = User.new(first_name: 'First', last_name: 'Last', email: 'test@test.com', password: 'abc123', password_confirmation: 'abc123')
-      user.email = '  test@test.com '
-      expect(user.valid?).to be true
+    it 'should return matching user when credentials are authenticated' do
+      user = User.create(first_name: 'Aaron', last_name: 'Ford', email: 'test@test.test', password: 'abc1234', password_confirmation: 'abc1234')
+      authenticated = User.authenticate_with_credentials("test@test.test", "abc1234")
+      expect(authenticated).to eq(user)
     end
 
     it 'should be valid when email contains incorrect case' do
-      user = User.new(first_name: 'First', last_name: 'Last', email: 'test@test.com', password: 'abc123', password_confirmation: 'abc123')
-      user.email = 'TEST@test.COM'
-      expect(user.valid?).to be true
+      user = User.create(first_name: 'Aaron', last_name: 'Ford', email: 'test@test.test', password: 'abc1234', password_confirmation: 'abc1234')
+      authenticated = User.authenticate_with_credentials("TEST@test.TeSt", "abc1234")
+      expect(authenticated).to eq(user)
+    end
+
+    it 'should be valid when email contains extra whitespace' do
+      user = User.create(first_name: 'Aaron', last_name: 'Ford', email: 'test@test.test', password: 'abc1234', password_confirmation: 'abc1234')
+      authenticated = User.authenticate_with_credentials(" test@test.test  ", "abc1234")
+      expect(authenticated).to eq(user)
     end
 
   end
