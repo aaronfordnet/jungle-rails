@@ -61,7 +61,6 @@ RSpec.describe User, type: :model do
       authenticated = User.authenticate_with_credentials(" test@test.test  ", "abc1234")
       expect(authenticated).to eq(user)
     end
-
   end
 
 end
